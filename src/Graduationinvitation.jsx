@@ -14,7 +14,7 @@ const content = {
   date: "31.07.2026",
   time: "9:30 - 11:00",
   venueName: "Trường Đại học Ngoại ngữ Tin học TP.HCM",
-  venueAddress: "số 806 Lê Quang Đạo, xã Hóc Môn,\nThành phố Hồ Chí Minh.",
+  venueAddress: "số 806 Lê Quang Đạo, xã Hóc Môn, Thành phố Hồ Chí Minh.",
   mapLink: "https://maps.app.goo.gl/Z5grm6YAS2h36K1WA",
   message: "Sự hiện diện của mọi người trong ngày lễ tốt nghiệp sắp tới sẽ là niềm vinh dự và niềm hạnh phúc to lớn đối với mình. Rất mong được gặp mọi người để cùng chia sẻ niềm vui và lưu giữ những kỷ niệm đẹp trong cột mốc đặc biệt này.",
 };
@@ -271,9 +271,9 @@ export default function GraduationInvitation() {
         }
 
         @media (max-width: 500px) {
-          .ribbon-image-wrapper { right: -25px; width: 170px; height: 85vh; }
-          .ribbon-name { font-size: 38px; }
-          .ribbon-role { font-size: 14px; }
+          .ribbon-image-wrapper { right: -25px; width: 150px; height: 85vh; }
+          .ribbon-name { font-size: 34px; }
+          .ribbon-role { font-size: 12px; }
         }
 
         /* ---------------- Content Area ---------------- */
@@ -295,7 +295,7 @@ export default function GraduationInvitation() {
         
         @media (max-width: 500px) {
           .gi-content { 
-            padding: 40px 175px 20px 20px; 
+            padding: 40px 140px 20px 20px; 
             overflow-x: hidden;
           } 
           .gi-title {
@@ -303,7 +303,8 @@ export default function GraduationInvitation() {
             letter-spacing: 1px;
           }
           .gi-grad-name-line1, .gi-grad-name-line2 {
-            font-size: clamp(26px, 8vw, 34px);
+            font-size: clamp(24px, 7vw, 32px);
+            white-space: nowrap;
           }
           .gi-scroll-top-btn {
             bottom: 75px !important;
@@ -353,18 +354,21 @@ export default function GraduationInvitation() {
           font-weight: 700;
           color: var(--maroon);
           line-height: 1.2;
+          white-space: nowrap;
         }
         .gi-uni-name-2 {
           font-size: 12px;
           font-weight: 700;
           color: var(--maroon);
           line-height: 1.2;
+          white-space: nowrap;
         }
         .gi-uni-sub {
           font-size: 8px;
           color: var(--ink-soft);
           margin-top: 2px;
           letter-spacing: 0.5px;
+          white-space: nowrap;
         }
 
         /* Invitation Text */
