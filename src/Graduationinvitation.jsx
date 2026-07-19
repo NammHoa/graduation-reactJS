@@ -354,21 +354,18 @@ export default function GraduationInvitation() {
           font-weight: 700;
           color: var(--maroon);
           line-height: 1.2;
-          white-space: nowrap;
         }
         .gi-uni-name-2 {
           font-size: 12px;
           font-weight: 700;
           color: var(--maroon);
           line-height: 1.2;
-          white-space: nowrap;
         }
         .gi-uni-sub {
           font-size: 8px;
           color: var(--ink-soft);
           margin-top: 2px;
           letter-spacing: 0.5px;
-          white-space: nowrap;
         }
 
         /* Invitation Text */
