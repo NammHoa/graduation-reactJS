@@ -235,7 +235,14 @@ export default function GraduationInvitation() {
         }
         
         @media (max-width: 500px) {
-          .gi-content { padding: 40px 175px 40px 25px; } 
+          .gi-content { 
+            padding: 40px 175px 40px 25px; 
+            overflow-x: hidden;
+          } 
+          .gi-title {
+            font-size: 24px; /* Thu nhỏ một chút xíu để vừa vặn hơn trên đt */
+            letter-spacing: 1px;
+          }
         }
 
         .gi-content > * {
@@ -322,11 +329,12 @@ export default function GraduationInvitation() {
 
         .gi-title {
           font-family: 'Playfair Display', serif;
-          font-size: 30px;
           font-weight: 700;
+          font-size: 30px;
           color: var(--maroon);
           margin: 0 0 5px 0;
           letter-spacing: 1px;
+          white-space: nowrap; /* Cực kỳ quan trọng: Ép luôn nằm trên 1 dòng */
           
           /* Bóng đổ cố định, KHÔNG chuyển động để tránh trình duyệt render lại liên tục gây khựng */
           text-shadow: 0 0 8px rgba(107, 15, 29, 0.15);
