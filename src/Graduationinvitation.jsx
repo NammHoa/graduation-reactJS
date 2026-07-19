@@ -22,7 +22,28 @@ const content = {
 export default function GraduationInvitation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const audioRef = useRef(null);
+  const contentRef = useRef(null);
+  
+  const handleScroll = () => {
+    if (contentRef.current) {
+      if (contentRef.current.scrollTop > 200) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    }
+  };
+
+  const scrollToTop = () => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  };
   
   const handleOpen = () => {
     setIsOpen(true);
@@ -73,13 +94,13 @@ export default function GraduationInvitation() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
 
-        /* ---------------- Ngăn chặn thanh cuộn kép ---------------- */
         body, html {
           margin: 0;
           padding: 0;
           width: 100%;
           height: 100%;
           overflow: hidden; /* Cực kỳ quan trọng: tắt thanh cuộn của trình duyệt */
+          background-color: #E8E2D9; /* Màu nền phụ bên ngoài cho màn hình máy tính */
         }
 
         .gi-page {
@@ -92,8 +113,11 @@ export default function GraduationInvitation() {
           --gold: #C5A566;
 
           position: relative;
-          width: 100vw;
+          width: 100%;
+          max-width: 1100px; /* Giới hạn độ rộng tối đa trên màn hình lớn */
           height: 100vh;
+          margin: 0 auto; /* Căn giữa màn hình */
+          box-shadow: 0 0 50px rgba(0,0,0,0.15); /* Đổ bóng tạo hiệu ứng thẻ cứng (card) */
           box-sizing: border-box;
           background: linear-gradient(135deg, var(--cream) 0%, var(--cream-deep) 100%);
           font-family: 'Be Vietnam Pro', sans-serif;
@@ -170,6 +194,38 @@ export default function GraduationInvitation() {
           50% { opacity: 0.9; }
         }
 
+        /* Nút Scroll To Top */
+        .gi-scroll-top-btn {
+          position: absolute;
+          bottom: 95px;
+          right: 30px;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background-color: var(--gold);
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 12px rgba(197, 165, 102, 0.5);
+          z-index: 100;
+          transition: all 0.3s ease;
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(15px);
+        }
+        .gi-scroll-top-btn.visible {
+          opacity: 0.9;
+          pointer-events: auto;
+          transform: translateY(0);
+        }
+        .gi-scroll-top-btn:hover {
+          transform: translateY(-5px);
+          opacity: 1;
+        }
+
         .ribbon-image {
           width: 100%;
           height: 100%;
@@ -224,19 +280,22 @@ export default function GraduationInvitation() {
         .gi-content {
           position: relative;
           z-index: 2;
-          max-width: 800px;
-          padding: 50px 240px 50px 30px; /* Căn trái chuẩn 30px, chừa phải 240px cho ruy băng */
+          padding: 60px 280px 20px 80px; 
           height: 100vh;
           overflow-y: auto;
+          overflow-x: hidden;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
-          align-items: flex-start; /* Ép tất cả bám sát lề trái */
+        }
+        
+        .gi-inner-content {
+          margin-top: auto;
+          margin-bottom: auto;
         }
         
         @media (max-width: 500px) {
           .gi-content { 
-            padding: 40px 175px 40px 20px; 
+            padding: 40px 175px 20px 20px; 
             overflow-x: hidden;
           } 
           .gi-title {
@@ -245,6 +304,12 @@ export default function GraduationInvitation() {
           }
           .gi-grad-name-line1, .gi-grad-name-line2 {
             font-size: clamp(26px, 8vw, 34px);
+          }
+          .gi-scroll-top-btn {
+            bottom: 75px !important;
+            right: 20px !important;
+            width: 45px !important;
+            height: 45px !important;
           }
         }
 
@@ -377,26 +442,23 @@ export default function GraduationInvitation() {
 
         /* Details */
         .gi-details-box {
-          margin-bottom: 45px; /* Tăng khoảng cách */
+          margin-bottom: 30px;
         }
-        .gi-day {
-          font-size: 12px;
+
+        .gi-day, .gi-time {
           font-weight: 600;
+          font-size: 14px;
           color: var(--ink-soft);
           margin: 0 0 5px 0;
           letter-spacing: 1px;
         }
+
         .gi-date {
-          font-size: 15px;
           font-weight: 700;
+          font-size: 16px;
           color: var(--maroon);
-          margin: 0 0 3px 0;
-        }
-        .gi-time {
-          font-size: 15px;
-          font-weight: 600;
-          color: var(--maroon);
-          margin: 0;
+          margin: 0 0 5px 0;
+          letter-spacing: 1px;
         }
 
         /* Venue */
@@ -452,11 +514,27 @@ export default function GraduationInvitation() {
 
         /* Message */
         .gi-message {
-          font-size: 13px;
-          color: var(--ink-soft);
-          line-height: 1.6;
-          margin: 0;
+          font-size: 14px;
+          color: var(--ink);
+          line-height: 1.8;
+          margin-top: 30px;
           text-align: justify;
+        }
+
+        /* Footer Nguồn */
+        .gi-footer {
+          text-align: center;
+          font-size: 11px;
+          color: var(--ink-soft);
+          letter-spacing: 1px;
+          opacity: 0.6;
+          border-top: 1px solid rgba(0,0,0,0.05);
+          padding-top: 15px;
+          margin-top: 40px; /* Khoảng cách dự phòng nếu nội dung quá dài */
+        }
+        .gi-footer strong {
+          font-weight: 700;
+          color: var(--maroon-deep);
         }
 
         /* Music Button */
@@ -568,47 +646,57 @@ export default function GraduationInvitation() {
       </div>
 
       {/* Main Content */}
-      <div className="gi-content">
-        <div className="gi-header">
-          {/* HUFLIT Logo */}
-          <img src="/logo-huflit.png" alt="University Logo" className="gi-logo-icon" />
-          <div className="gi-uni-text">
-            <span className="gi-uni-name-1">{content.university.name}</span>
-            <span className="gi-uni-name-2">{content.university.sub}</span>
-            <span className="gi-uni-sub">{content.university.en}</span>
+      <div 
+        className="gi-content"
+        ref={contentRef}
+        onScroll={handleScroll}
+      >
+        <div className="gi-inner-content">
+          <div className="gi-header">
+            {/* HUFLIT Logo */}
+            <img src="/logo-huflit.png" alt="University Logo" className="gi-logo-icon" />
+            <div className="gi-uni-text">
+              <span className="gi-uni-name-1">{content.university.name}</span>
+              <span className="gi-uni-name-2">{content.university.sub}</span>
+              <span className="gi-uni-sub">{content.university.en}</span>
+            </div>
           </div>
-        </div>
 
-        <div className="gi-title-block">
-          <p className="gi-attend">Tới tham dự</p>
-          <h1 className="gi-title">{content.eventTitle}</h1>
-          <div className="gi-grad-name-container">
-            <span className="gi-grad-name-line1">{content.gradName1}</span>
-            <span className="gi-grad-name-line2">{content.gradName2}</span>
+          <div className="gi-title-block">
+            <p className="gi-attend">Tới tham dự</p>
+            <h1 className="gi-title">{content.eventTitle}</h1>
+            <div className="gi-grad-name-container">
+              <span className="gi-grad-name-line1">{content.gradName1}</span>
+              <span className="gi-grad-name-line2">{content.gradName2}</span>
+            </div>
           </div>
-        </div>
 
-        <div className="gi-details-box">
-          <p className="gi-day">{content.day}</p>
-          <p className="gi-date">{content.date}</p>
-          <p className="gi-time">{content.time}</p>
-        </div>
+          <div className="gi-details-box">
+            <p className="gi-day">{content.day}</p>
+            <p className="gi-date">{content.date}</p>
+            <p className="gi-time">{content.time}</p>
+          </div>
 
-        <div className="gi-venue-box">
-          <p className="gi-venue-label">TẠI</p>
-          <p className="gi-venue-name">{content.venueName}</p>
-          <p className="gi-venue-address">{content.venueAddress}</p>
-          
-          <a href={content.mapLink} target="_blank" rel="noreferrer" className="gi-map-btn">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            Xem bản đồ
-          </a>
-        </div>
+          <div className="gi-venue-box">
+            <p className="gi-venue-label">TẠI</p>
+            <p className="gi-venue-name">{content.venueName}</p>
+            <p className="gi-venue-address">{content.venueAddress}</p>
+            <a href={content.mapLink} target="_blank" rel="noreferrer" className="gi-map-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Xem bản đồ
+            </a>
+          </div>
 
-        <p className="gi-message">{content.message}</p>
+          <p className="gi-message">{content.message}</p>
+        </div>
+        
+        {/* Nguồn / Credit */}
+        <div className="gi-footer">
+          31/07 - <strong>h.namnam</strong>
+        </div>
       </div>
 
       {/* Background Audio Element */}
@@ -633,6 +721,17 @@ export default function GraduationInvitation() {
           </svg>
         )}
       </div>
+
+      {/* Floating Scroll To Top Button */}
+      <button 
+        className={`gi-scroll-top-btn ${showScrollTop ? 'visible' : ''}`} 
+        onClick={scrollToTop} 
+        title="Cuộn lên đầu trang"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
 
     </div>
   );
