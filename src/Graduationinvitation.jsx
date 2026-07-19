@@ -277,9 +277,9 @@ export default function GraduationInvitation() {
         }
         
         @media (max-width: 500px) {
-          .ribbon-image-wrapper { right: -35px; width: 130px; height: 85vh; }
-          .ribbon-name { font-size: 30px; }
-          .ribbon-role { font-size: 11px; }
+          .ribbon-image-wrapper { right: -30px; width: 115px; height: 85vh; }
+          .ribbon-name { font-size: 26px; }
+          .ribbon-role { font-size: 10px; }
         }
 
         /* ---------------- Content Area ---------------- */
@@ -296,7 +296,7 @@ export default function GraduationInvitation() {
         
         @media (max-width: 500px) {
           .gi-content { 
-            padding: 40px 140px 20px 20px; 
+            padding: 40px 160px 20px 20px; 
             overflow-x: hidden;
           } 
           .gi-title {
