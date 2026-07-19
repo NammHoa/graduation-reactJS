@@ -270,8 +270,14 @@ export default function GraduationInvitation() {
           margin-top: 5px;
         }
 
+        .gi-inner-content {
+          margin-top: auto;
+          margin-bottom: auto;
+          width: 100%;
+        }
+        
         @media (max-width: 500px) {
-          .ribbon-image-wrapper { right: -25px; width: 150px; height: 85vh; }
+          .ribbon-image-wrapper { right: -40px; width: 150px; height: 85vh; }
           .ribbon-name { font-size: 34px; }
           .ribbon-role { font-size: 12px; }
         }
@@ -288,14 +294,9 @@ export default function GraduationInvitation() {
           flex-direction: column;
         }
         
-        .gi-inner-content {
-          margin-top: auto;
-          margin-bottom: auto;
-        }
-        
         @media (max-width: 500px) {
           .gi-content { 
-            padding: 40px 140px 20px 20px; 
+            padding: 40px 120px 20px 20px; 
             overflow-x: hidden;
           } 
           .gi-title {
