@@ -240,7 +240,7 @@ export default function GraduationInvitation() {
             overflow-x: hidden;
           } 
           .gi-title {
-            font-size: clamp(16px, 5vw, 22px);
+            font-size: 26px; /* Sẽ tự động xuống dòng khi thiếu chỗ */
             letter-spacing: 1px;
           }
           .gi-grad-name-line1, .gi-grad-name-line2 {
@@ -337,7 +337,6 @@ export default function GraduationInvitation() {
           color: var(--maroon);
           margin: 0 0 5px 0;
           letter-spacing: 1px;
-          white-space: nowrap; /* Cực kỳ quan trọng: Ép luôn nằm trên 1 dòng */
           
           /* Bóng đổ cố định, KHÔNG chuyển động để tránh trình duyệt render lại liên tục gây khựng */
           text-shadow: 0 0 8px rgba(107, 15, 29, 0.15);
