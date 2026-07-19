@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 
 const content = {
   university: {
@@ -8,12 +8,13 @@ const content = {
   },
   guestName: "Quý khách",
   eventTitle: "LỄ TỐT NGHIỆP",
-  gradName: "Lâm Huỳnh Hòa Nam",
+  gradName1: "Lâm Huỳnh",
+  gradName2: "Hòa Nam",
   day: "THỨ SÁU",
   date: "31.07.2026",
   time: "9:30 - 11:00",
   venueName: "Trường Đại học Ngoại ngữ Tin học TP.HCM",
-  venueAddress: "số 806 Lê Quang Đạo, xã Hóc Môn, Thành phố Hồ Chí Minh. ",
+  venueAddress: "số 806 Lê Quang Đạo, xã Hóc Môn,\nThành phố Hồ Chí Minh.",
   mapLink: "https://maps.app.goo.gl/Z5grm6YAS2h36K1WA",
   message: "Sự hiện diện của mọi người trong ngày lễ tốt nghiệp sắp tới sẽ là niềm vinh dự và niềm hạnh phúc to lớn đối với mình. Rất mong được gặp mọi người để cùng chia sẻ niềm vui và lưu giữ những kỷ niệm đẹp trong cột mốc đặc biệt này.",
 };
@@ -43,10 +44,43 @@ export default function GraduationInvitation() {
     }
   };
 
+  // Tạo ra 30 đốm sáng ngẫu nhiên một lần duy nhất
+  const sparkles = useMemo(() => {
+    return Array.from({ length: 30 }).map((_, i) => {
+      const size = Math.random() * 3 + 2; // Kích thước từ 2px đến 5px
+      const left = Math.random() * 100; // Vị trí ngẫu nhiên chiều ngang
+      const animDuration = Math.random() * 8 + 8; // Tốc độ bay lên: 8s đến 16s
+      const animDelay = Math.random() * 5; // Độ trễ xuất hiện ngẫu nhiên
+      const twinkleDuration = Math.random() * 3 + 2; // Tốc độ chớp nháy: 2s đến 5s
+      return (
+        <div 
+          key={i}
+          className="gi-sparkle"
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+            left: `${left}%`,
+            animationDuration: `${animDuration}s, ${twinkleDuration}s`,
+            animationDelay: `${animDelay}s, ${animDelay}s`
+          }}
+        />
+      );
+    });
+  }, []);
+
   return (
     <div className={`gi-page ${isOpen ? 'opened' : ''}`}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
+
+        /* ---------------- Ngăn chặn thanh cuộn kép ---------------- */
+        body, html {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden; /* Cực kỳ quan trọng: tắt thanh cuộn của trình duyệt */
+        }
 
         .gi-page {
           --cream: #FDFBF7;
@@ -58,8 +92,8 @@ export default function GraduationInvitation() {
           --gold: #C5A566;
 
           position: relative;
-          width: 100%;
-          min-height: 100vh;
+          width: 100vw;
+          height: 100vh;
           box-sizing: border-box;
           background: linear-gradient(135deg, var(--cream) 0%, var(--cream-deep) 100%);
           font-family: 'Be Vietnam Pro', sans-serif;
@@ -102,6 +136,38 @@ export default function GraduationInvitation() {
           33% { transform: rotateZ(7deg) rotateX(-2deg) rotateY(-5deg) skewX(-1deg); }
           66% { transform: rotateZ(9deg) rotateX(3deg) rotateY(10deg) skewX(1.5deg); }
           100% { transform: rotateZ(8deg) rotateX(-5deg) rotateY(-15deg) skewX(-2deg); }
+        }
+
+        /* ---------------- Gold Sparkles ---------------- */
+        .gi-sparkles-container {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+          z-index: 1; /* Nằm dưới nội dung nhưng trên nền chữ */
+        }
+        
+        .gi-sparkle {
+          position: absolute;
+          bottom: -10px;
+          background-color: #D4AF37; /* Màu vàng gold */
+          border-radius: 50%;
+          box-shadow: 0 0 8px 2px rgba(212, 175, 55, 0.5);
+          opacity: 0;
+          animation-name: floatUp, twinkle;
+          animation-timing-function: linear, ease-in-out;
+          animation-iteration-count: infinite, infinite;
+          animation-direction: normal, alternate;
+        }
+
+        @keyframes floatUp {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-110vh); }
+        }
+
+        @keyframes twinkle {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 0.9; }
         }
 
         .ribbon-image {
@@ -149,9 +215,9 @@ export default function GraduationInvitation() {
         }
 
         @media (max-width: 500px) {
-          .ribbon-image-wrapper { right: -20px; width: 140px; height: 85vh; }
-          .ribbon-name { font-size: 30px; }
-          .ribbon-role { font-size: 11px; }
+          .ribbon-image-wrapper { right: -25px; width: 170px; height: 85vh; }
+          .ribbon-name { font-size: 38px; }
+          .ribbon-role { font-size: 14px; }
         }
 
         /* ---------------- Content Area ---------------- */
@@ -169,7 +235,7 @@ export default function GraduationInvitation() {
         }
         
         @media (max-width: 500px) {
-          .gi-content { padding: 40px 160px 40px 25px; } 
+          .gi-content { padding: 40px 175px 40px 25px; } 
         }
 
         .gi-content > * {
@@ -284,12 +350,19 @@ export default function GraduationInvitation() {
           }
         }
 
-        .gi-grad-name {
+        .gi-grad-name-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 5px;
+        }
+
+        .gi-grad-name-line1, .gi-grad-name-line2 {
           font-family: 'Great Vibes', cursive;
           font-size: 42px;
           color: var(--gold);
+          line-height: 0.85; /* Ép sát vào nhau một chút theo ý muốn */
           margin: 0;
-          line-height: 1;
         }
 
         /* Details */
@@ -463,6 +536,11 @@ export default function GraduationInvitation() {
         }
       `}</style>
 
+      {/* Hiệu ứng hạt bụi vàng lấp lánh */}
+      <div className="gi-sparkles-container">
+        {sparkles}
+      </div>
+
       {/* Welcome Cover Screen */}
       <div className={`gi-cover ${isOpen ? 'opened' : ''}`}>
         <img src="/logo-huflit.png" alt="HUFLIT Logo" className="gi-cover-logo" />
@@ -494,7 +572,10 @@ export default function GraduationInvitation() {
         <div className="gi-title-block">
           <p className="gi-attend">Tới tham dự</p>
           <h1 className="gi-title">{content.eventTitle}</h1>
-          <h2 className="gi-grad-name">{content.gradName}</h2>
+          <div className="gi-grad-name-container">
+            <span className="gi-grad-name-line1">{content.gradName1}</span>
+            <span className="gi-grad-name-line2">{content.gradName2}</span>
+          </div>
         </div>
 
         <div className="gi-details-box">
