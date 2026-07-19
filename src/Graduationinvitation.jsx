@@ -236,12 +236,15 @@ export default function GraduationInvitation() {
         
         @media (max-width: 500px) {
           .gi-content { 
-            padding: 40px 175px 40px 25px; 
+            padding: 40px 175px 40px 20px; 
             overflow-x: hidden;
           } 
           .gi-title {
-            font-size: 24px; /* Thu nhỏ một chút xíu để vừa vặn hơn trên đt */
+            font-size: clamp(16px, 5vw, 22px);
             letter-spacing: 1px;
+          }
+          .gi-grad-name-line1, .gi-grad-name-line2 {
+            font-size: clamp(26px, 8vw, 34px);
           }
         }
 
