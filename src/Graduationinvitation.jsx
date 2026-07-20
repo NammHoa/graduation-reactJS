@@ -12,7 +12,7 @@ const content = {
   gradName2: "Hòa Nam",
   day: "THỨ SÁU",
   date: "31.07.2026",
-  time: "9:30 - 11:00",
+  time: "9:00 - 11:00",
   venueName: "Trường Đại học Ngoại ngữ Tin học TP.HCM",
   venueAddress: "số 806 Lê Quang Đạo, xã Hóc Môn, Thành phố Hồ Chí Minh.",
   mapLink: "https://maps.app.goo.gl/Z5grm6YAS2h36K1WA",
